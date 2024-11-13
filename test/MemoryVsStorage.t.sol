@@ -1,52 +1,39 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-import "forge-std/Test.sol";
-import "../src/MemoryVsStorage.sol"; // Adjust this path according to your directory structure
+import {Test, console} from "forge-std/Test.sol";
+import {MemoryVsStorageA} from "../src/MemoryVsStorage.sol";
+import {MemoryVsStorageB} from "../src/MemoryVsStorage.sol";
 
 contract TestMemoryVsStorage is Test {
-    MemoryVsStorage private memoryVsStorage;
+    MemoryVsStorageA public memoryVsStorageA;
+    MemoryVsStorageB public memoryVsStorageB;
 
     function setUp() public {
-        memoryVsStorage = new MemoryVsStorage();
+        memoryVsStorageA = new MemoryVsStorageA();
+        memoryVsStorageB = new MemoryVsStorageB();
     }
 
-    function testAddToStorage() public {
+    function test_MemoryVsStorageACtr() public {
         uint256[] memory numsToAdd = new uint256[](3);
         numsToAdd[0] = 1;
         numsToAdd[1] = 2;
         numsToAdd[2] = 3;
-
-        memoryVsStorage.addToStorage(numsToAdd);
-
+        memoryVsStorageA.addToStorage(numsToAdd);
         for (uint256 i = 0; i < numsToAdd.length; i++) {
-            uint256 storedNumber = memoryVsStorage.numbers(i);
+            uint256 storedNumber = memoryVsStorageA.numbers(i);
             assertEq(storedNumber, numsToAdd[i], "Stored numbers should match input numbers");
         }
     }
 
-    function testAddToMemory() public {
+    function test_MemoryVsStorageBCtr() public view {
         uint256[] memory numsToAdd = new uint256[](3);
         numsToAdd[0] = 1;
         numsToAdd[1] = 2;
         numsToAdd[2] = 3;
-
-        uint256[] memory processedNumbers = memoryVsStorage.addToMemory(numsToAdd);
-
+        uint256[] memory processedNumbers = memoryVsStorageB.addToMemory(numsToAdd);
         for (uint256 i = 0; i < numsToAdd.length; i++) {
             assertEq(processedNumbers[i], numsToAdd[i] + 1, "Processed numbers should be incremented by 1");
         }
     }
-
-    // function testAddToMemoryDoesNotChangeState() public {
-    //     uint256[] memory numsToAdd = new uint256[](3);
-    //     numsToAdd[0] = 4;
-    //     numsToAdd[1] = 5;
-    //     numsToAdd[2] = 6;
-
-    //     memoryVsStorage.addToMemory(numsToAdd);
-
-    //     // Check that the contract's storage hasn't been modified by the addToMemory function
-    //     assertEq(memoryVsStorage.numbers.length, 0, "Storage length should be unchanged");
-    // }
 }
