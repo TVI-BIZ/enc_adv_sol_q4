@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-import "forge-std/Test.sol";
-import "../src/Mapping.sol"; // Adjust the path to your SimpleMapping contract
+import {Test, console} from "forge-std/Test.sol";
+import {Mapping} from "../src/Mapping.sol";
 
 contract TestSimpleMapping is Test {
     Mapping sm;
@@ -11,7 +11,7 @@ contract TestSimpleMapping is Test {
         sm = new Mapping();
     }
 
-    function testUpdateBalance() public {
+    function test_UpdateBalance() public {
         uint256 initialBalance = sm.getBalance();
         assertEq(initialBalance, 0, "Initial balance should be zero");
 
@@ -20,7 +20,7 @@ contract TestSimpleMapping is Test {
         assertEq(updatedBalance, 100, "Balance should be updated to 100");
     }
 
-    function testSeparateBalances() public {
+    function test_SeparateBalances() public {
         // Store for first address
         sm.updateBalance(100);
         uint256 balance1 = sm.getBalance();
@@ -40,7 +40,7 @@ contract TestSimpleMapping is Test {
         // assertEq(balance1Check, balance1Untouched, "Account[0] Balance should remain 100");
     }
 
-    function testDefaultBalanceZero() public {
+    function test_DefaultBalanceZero() public {
         address addr2 = address(0x456);
         vm.prank(addr2);
         uint256 balance = sm.getBalance();

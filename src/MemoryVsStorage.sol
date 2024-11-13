@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.27;
 
-contract MemoryVsStorage {
+contract MemoryVsStorageA {
     uint256[] public numbers;
 
     // Adding an array to state storage
@@ -10,6 +10,10 @@ contract MemoryVsStorage {
             numbers.push(_numbers[i]);
         }
     }
+}
+
+contract MemoryVsStorageB {
+    uint256[] public numbers;
 
     // Uses memory, only modifies state memory temporarily for processing
     function addToMemory(uint256[] memory _numbers) public pure returns (uint256[] memory) {
