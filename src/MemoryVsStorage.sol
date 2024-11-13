@@ -3,8 +3,8 @@ pragma solidity ^0.8.27;
 
 contract MemoryVsStorageA {
     uint256[] public numbers;
-
     // Adding an array to state storage
+
     function addToStorage(uint256[] memory _numbers) public {
         for (uint256 i = 0; i < _numbers.length; i++) {
             numbers.push(_numbers[i]);

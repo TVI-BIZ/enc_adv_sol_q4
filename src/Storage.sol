@@ -12,3 +12,9 @@ contract StorageB {
     uint128 public uintB; // 16 bytes
     uint64 public uintC; // 8 bytes
 }
+
+contract StorageC {
+    uint256 public immutable uintA; // 32 bytes
+    uint128 public immutable uintB; // 16 bytes
+    uint64 public immutable uintC; // 8 bytes
+}

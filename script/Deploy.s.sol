@@ -3,17 +3,14 @@ pragma solidity ^0.8.27;
 
 import {Script, console} from "forge-std/Script.sol";
 
-import {StorageA} from "../src/Storage.sol";
-import {StorageB} from "../src/Storage.sol";
+import {StorageA, StorageB} from "../src/Storage.sol";
+import {MemoryVsStorageA, MemoryVsStorageB} from "../src/MemoryVsStorage.sol";
+import {RequireA, RequireB} from "../src/RequireStrings.sol";
+import {PublicVariable, PrivateVariable} from "../src/PublicVsPrivate.sol";
+import {ArryaVsMappingA, ArryaVsMappingB} from "../src/ArrayVsMapping.sol";
 
-import {MemoryVsStorageA} from "../src/MemoryVsStorage.sol";
-import {MemoryVsStorageB} from "../src/MemoryVsStorage.sol";
-
-import {RequireA} from "../src/RequireStrings.sol";
-import {RequireB} from "../src/RequireStrings.sol";
-
-import {Mapping} from "../src/Mapping.sol";
-import {Packing} from "../src/Packing.sol"; // Declare the MemoryVsStorage contract
+//import {Mapping} from "../src/Mapping.sol";
+//import {Packing} from "../src/Packing.sol"; // Declare the MemoryVsStorage contract
 
 contract StorageScript is Script {
     StorageA public storageA;
@@ -25,8 +22,11 @@ contract StorageScript is Script {
     RequireA public requireA;
     RequireB public requireB;
 
-    Mapping public simpleMapping;
-    Packing public packing;
+    PublicVariable public publicVariable;
+    PrivateVariable public privateVariable;
+
+    ArryaVsMappingA public arryaVsMappingA;
+    ArryaVsMappingB public arryaVsMappingB;
 
     function setUp() public {}
 
@@ -52,11 +52,21 @@ contract StorageScript is Script {
         console.log("RequireB deployed at:", address(requireB));
 
         // Deploy SimpleMapping
-        simpleMapping = new Mapping();
-        console.log("SimpleMapping deployed at:", address(simpleMapping));
+        // simpleMapping = new Mapping();
+        // console.log("SimpleMapping deployed at:", address(simpleMapping));
 
-        packing = new Packing();
-        console.log("Packing deployed at:", address(packing));
+        // packing = new Packing();
+        // console.log("Packing deployed at:", address(packing));
+
+        arryaVsMappingA = new arryaVsMappingA();
+        arryaVsMappingB = new arryaVsMappingB();
+        console.log("ArryaVsMappingA deployed at:", address(arryaVsMappingA));
+        console.log("ArryaVsMappingB deployed at:", address(arryaVsMappingB));
+
+        publicVariable = new PublicVariable();
+        privateVariable = new PrivateVariable();
+        console.log("PublicVariable deployed at:", address(publicVariable));
+        console.log("PrivateVariable deployed at:", address(privateVariable));
 
         vm.stopBroadcast();
     }
