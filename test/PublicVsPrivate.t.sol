@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.27;
+pragma solidity ^0.8.28;
 
 import "forge-std/Test.sol";
 import "../src/PublicVsPrivate.sol";
@@ -40,7 +40,7 @@ contract VariableGasOptimizationTest is Test {
         console.log("PrivateVariable updateValue gas:", privateUpdateGas);
     }
 
-    function testGetValueGasCosts() public {
+    function testGetValueGasCosts() public view {
         uint256 startGas = gasleft();
         publicVariable.value();
         uint256 publicGetterGas = startGas - gasleft();
